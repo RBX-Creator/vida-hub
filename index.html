@@ -3,310 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>VIDA SUPER HUB</title>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131a26;
-            --accent-blue: #00d2ff;
-            --accent-purple: #9d4edd;
-            --text-color: #ffffff;
-            --text-muted: #858fbb;
-            --success-color: #2ec4b6;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        /* Neon Cyber / Anime Style (Neon Blau & Lila) */
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        header {
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00d2ff;
+            text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
+            font-size: 2.5rem;
             margin-bottom: 30px;
-            width: 100%;
-            max-width: 500px;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            background: var(--card-bg);
-            padding: 8px;
+        /* Key System Bereich oben */
+        .key-box {
+            background: #131a26;
+            border: 2px solid #9d4edd;
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.5);
             border-radius: 12px;
-            border: 1px solid rgba(0, 210, 255, 0.1);
-            margin-bottom: 25px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto 40px auto;
         }
 
-        .tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 16px;
+        .key-box h3 {
+            color: #9d4edd;
+            margin-top: 0;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            background-color: #0b0f19;
+            border: 1px solid #00d2ff;
+            border-radius: 6px;
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 8px #00d2ff;
+        }
+
+        .status-message {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Grid für die Spiele-Blöcke */
+        .hub-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Einzelne Spiele-Blöcke */
+        .block {
+            background: #131a26;
+            border: 2px solid #00d2ff;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            opacity: 0.4; /* Standardmäßig ausgegraut */
+            pointer-events: none; /* Klicks deaktiviert */
+        }
+
+        /* Wenn der Key richtig ist, wird dieser Style aktiv */
+        .block.unlocked {
+            opacity: 1;
+            pointer-events: auto;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .block:hover.unlocked {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+        }
+
+        .block h2 {
+            margin-top: 0;
+            color: #00d2ff;
+        }
+
+        /* Copy Buttons */
+        .copy-btn {
+            background-color: #131a26;
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+            padding: 10px 20px;
+            font-size: 1rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn.active {
-            color: var(--text-color);
-            background: rgba(0, 210, 255, 0.15);
-            border: 1px solid var(--accent-blue);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
             width: 100%;
-            max-width: 500px;
-            margin-bottom: 25px;
+            margin-top: 15px;
+            transition: all 0.2s;
         }
 
-        .stat-card {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .stat-card h3 {
-            font-size: 20px;
-            color: var(--accent-blue);
-            font-weight: 700;
-        }
-
-        .stat-card p {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-
-        .key-box {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid rgba(157, 78, 221, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-        }
-
-        .key-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s ease;
-        }
-
-        .banner-frame {
-            width: 100%;
-            height: 180px;
-            background: #182232;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .banner-placeholder {
-            color: var(--text-muted);
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-color);
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-            line-height: 1.5;
-        }
-
-        .btn {
-            width: 100%;
-            background: none;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn.copied {
-            background: var(--success-color) !important;
-            border-color: var(--success-color) !important;
-            color: #000000 !important;
+        .copy-btn:hover {
+            background-color: #00d2ff;
+            color: #131a26;
+            box-shadow: 0 0 10px #00d2ff;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><i class="fas fa-bolt"></i> SUPER HUB</div>
-        
-        <div class="tabs">
-            <button class="tab-btn active">Scripts</button>
-            <button class="tab-btn">Executor</button>
-            <button class="tab-btn">FAQ</button>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>10</h3>
-                <p>Scripts</p>
-            </div>
-            <div class="stat-card">
-                <h3>100%</h3>
-                <p>Kostenlos</p>
-            </div>
-            <div class="stat-card">
-                <h3>24/7</h3>
-                <p>Verfügbar</p>
-            </div>
-            <div class="stat-card">
-                <h3>Aktiv</h3>
-                <p>Status</p>
-            </div>
-        </div>
-    </header>
+    <h1>⚡ VIDA SUPER HUB ⚡</h1>
 
     <div class="key-box">
-        <div class="key-title">🔑 Get Key</div>
-        <button class="btn" onclick="copyScript(this)" data-script="Super-Hub777">
-            <i class="fas fa-key"></i> Copy Key
-        </button>
+        <h3>🔑 Enter Key to Unlock Hub</h3>
+        <input type="text" id="keyInput" placeholder="Enter Key Here..." oninput="checkKey()">
+        <div id="status" class="status-message" style="color: #858fbb;">Locked 🔒</div>
     </div>
+    <div class="hub-container">
 
-    <div class="container">
-        
-        <div class="card">
-            <div class="banner-frame">
-                <img class="banner-img" src="https://cdn.discordapp.com/attachments/1516388906470215742/1516394601848770622/IMG_2698.webp?ex=6a327c06&is=6a312a86&hm=da332bd7912939c0b1ffdaa412e36dcc1be8df22ee4a315e394a83ec69d314dd&" alt="Blox Fruits">
-            </div>
-            <div class="card-body">
-                <div class="card-title">Blox Fruits (Bounty)</div>
-                <div class="card-desc">Dieser Script kann: [Auto Bounty, AIM, All on PVP]</div>
-                <button class="btn" onclick="copyScript(this)" data-script="local CorrectKey = 'Super-Hub777' local ScreenGui = Instance.new('ScreenGui') local MainFrame = Instance.new('Frame') local UICorner = Instance.new('UICorner') local UIStroke = Instance.new('UIStroke') local Title = Instance.new('TextLabel') local KeyInput = Instance.new('TextBox') local UICornerTextBox = Instance.new('UICorner') local UIStrokeTextBox = Instance.new('UIStroke') local CheckButton = Instance.new('TextButton') local UICornerButton = Instance.new('UICorner') ScreenGui.Parent = game:GetService('CoreGui') ScreenGui.Name = 'SuperHubKeySystem' MainFrame.Name = 'MainFrame' MainFrame.Parent = ScreenGui MainFrame.BackgroundColor3 = Color3.fromRGB(19, 26, 38) MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100) MainFrame.Size = UDim2.new(0, 300, 0, 200) MainFrame.Active = true MainFrame.Draggable = true UICorner.CornerRadius = UDim.new(0, 12) UICorner.Parent = MainFrame UIStroke.Parent = MainFrame UIStroke.Thickness = 2 UIStroke.Color = Color3.fromRGB(0, 210, 255) UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border Title.Name = 'Title' Title.Parent = MainFrame Title.BackgroundTransparency = 1 Title.Position = UDim2.new(0, 0, 0, 15) Title.Size = UDim2.new(1, 0, 0, 30) Title.Font = Enum.Font.Poppins Title.Text = '⚡ SUPER HUB' Title.TextColor3 = Color3.fromRGB(0, 210, 255) Title.TextSize = 22 KeyInput.Name = 'KeyInput' KeyInput.Parent = MainFrame KeyInput.BackgroundColor3 = Color3.fromRGB(11, 15, 25) KeyInput.Position = UDim2.new(0.1, 0, 0.4, 0) KeyInput.Size = UDim2.new(0.8, 0, 0, 35) KeyInput.Font = Enum.Font.Poppins KeyInput.PlaceholderText = 'Enter Key Here...' KeyInput.PlaceholderColor3 = Color3.fromRGB(133, 143, 187) KeyInput.Text = '' KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255) KeyInput.TextSize = 14 UICornerTextBox.CornerRadius = UDim.new(0, 8) UICornerTextBox.Parent = KeyInput UIStrokeTextBox.Parent = KeyInput UIStrokeTextBox.Thickness = 1 UIStrokeTextBox.Color = Color3.fromRGB(157, 78, 221) CheckButton.Name = 'CheckButton' CheckButton.Parent = MainFrame CheckButton.BackgroundColor3 = Color3.fromRGB(19, 26, 38) CheckButton.Position = UDim2.new(0.2, 0, 0.7, 5) CheckButton.Size = UDim2.new(0.6, 0, 0, 35) CheckButton.Font = Enum.Font.Poppins CheckButton.Text = 'Check Key' CheckButton.TextColor3 = Color3.fromRGB(0, 210, 255) CheckButton.TextSize = 15 UICornerButton.CornerRadius = UDim.new(0, 8) UICornerButton.Parent = CheckButton local UIStrokeButton = Instance.new('UIStroke') UIStrokeButton.Parent = CheckButton UIStrokeButton.Thickness = 1 UIStrokeButton.Color = Color3.fromRGB(0, 210, 255) CheckButton.MouseButton1Click:Connect(function() if KeyInput.Text == CorrectKey then Title.Text = '✅ Key Correct!' Title.TextColor3 = Color3.fromRGB(46, 196, 182) CheckButton.Text = 'Loading...' task.wait(1) ScreenGui:Destroy() loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua'))() else Title.Text = '❌ Wrong Key!' Title.TextColor3 = Color3.fromRGB(255, 75, 75) UIStroke.Color = Color3.fromRGB(255, 75, 75) task.wait(1.5) Title.Text = '⚡ SUPER HUB' Title.TextColor3 = Color3.fromRGB(0, 210, 255) UIStroke.Color = Color3.fromRGB(0, 210, 255) end end)">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
+        <div class="block" id="block1">
+            <h2>🏴‍☠️ Blox Fruits</h2>
+            <p>Hermanos Hub - Best Bounty & Auto Farm Script</p>
+            <button class="copy-btn" onclick="copyScript(`loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua'))()`)">Copy Script</button>
         </div>
 
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 2</div><button class="btn" onclick="copyScript(this)" data-script="Code 2">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 3</div><button class="btn" onclick="copyScript(this)" data-script="Code 3">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 4</div><button class="btn" onclick="copyScript(this)" data-script="Code 4">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 5</div><button class="btn" onclick="copyScript(this)" data-script="Code 5">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 6</div><button class="btn" onclick="copyScript(this)" data-script="Code 6">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 7</div><button class="btn" onclick="copyScript(this)" data-script="Code 7">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 8</div><button class="btn" onclick="copyScript(this)" data-script="Code 8">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 9</div><button class="btn" onclick="copyScript(this)" data-script="Code 9">Copy</button></div></div>
-        <div class="card"><div class="card-body"><div class="card-title">Überschrift 10</div><button class="btn" onclick="copyScript(this)" data-script="Code 10">Copy</button></div></div>
+        <div class="block" id="block2">
+            <h2>🎮 Block 2</h2>
+            <p>Coming Soon...</p>
+            <button class="copy-btn" onclick="copyScript('-- Soon')">Copy Script</button>
+        </div>
 
     </div>
 
     <script>
-        function copyScript(buttonElement) {
-            const keyText = buttonElement.getAttribute('data-script');
-            navigator.clipboard.writeText(keyText).then(() => {
-                buttonElement.classList.add('copied');
-                const originalText = buttonElement.innerHTML;
-                buttonElement.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    buttonElement.classList.remove('copied');
-                    buttonElement.innerHTML = originalText;
-                }, 2000);
+        const correctKey = "Super-Hub777";
+
+        // Funktion, die den eingegebenen Key überprüft
+        function checkKey() {
+            const input = document.getElementById("keyInput").value;
+            const status = document.getElementById("status");
+            const blocks = document.querySelectorAll(".block");
+
+            if (input === correctKey) {
+                status.innerText = "Access Granted! ✅ Unlocked";
+                status.style.color = "#2ec4b6";
+                document.getElementById("keyInput").style.borderColor = "#2ec4b6";
+                
+                // Alle Blöcke freischalten
+                blocks.forEach(block => {
+                    block.classList.add("unlocked");
+                });
+            } else if (input === "") {
+                status.innerText = "Locked 🔒";
+                status.style.color = "#858fbb";
+                document.getElementById("keyInput").style.borderColor = "#00d2ff";
+                
+                // Blöcke wieder sperren, wenn das Feld geleert wird
+                blocks.forEach(block => {
+                    block.classList.remove("unlocked");
+                });
+            } else {
+                status.innerText = "Wrong Key! ❌";
+                status.style.color = "#ff4b4b";
+                document.getElementById("keyInput").style.borderColor = "#ff4b4b";
+                
+                // Blöcke gesperrt lassen
+                blocks.forEach(block => {
+                    block.classList.remove("unlocked");
+                });
+            }
+        }
+
+        // Kopier-Funktion für die Buttons
+        function copyScript(scriptText) {
+            navigator.clipboard.writeText(scriptText).then(() => {
+                alert("Script erfolgreich kopiert! Du kannst es jetzt in deinen Executor einfügen.");
             }).catch(err => {
-                console.error('Fehler: ', err);
+                alert("Fehler beim Kopieren: " + err);
             });
         }
     </script>
+
 </body>
 </html>
