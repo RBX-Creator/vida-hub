@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDA SUPER HUB</title>
+    <title>SUPER HUB</title>
     <style>
         body {
             background-color: #0b0f19;
@@ -19,29 +19,43 @@
             text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
             font-size: 2.5rem;
             margin-bottom: 25px;
+            font-weight: bold;
         }
 
-        /* DIE ORIGINALEN KÄSTEN/BADGES AUS DEM ALTEN SCRIPT */
-        .badge-container {
+        /* DAS ORIGINALE 2x2 KACHEL-RASTER AUS DEINEM FOTO */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 440px;
+            margin: 0 auto 35px auto;
+            padding: 0 10px;
+        }
+
+        .stat-card {
+            background-color: #131a26;
+            border-radius: 12px;
+            padding: 20px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            align-items: center;
         }
 
-        .badge {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid #00d2ff;
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
+        .stat-value {
+            font-size: 1.6rem;
             font-weight: bold;
             color: #00d2ff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #858fbb;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         /* Key System Bereich */
@@ -107,7 +121,7 @@
             font-size: 0.9rem;
         }
 
-        /* Grid & Blöcke aus dem Original-Design */
+        /* Grid & Blöcke */
         .hub-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -123,7 +137,7 @@
             padding: 20px;
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
-            opacity: 0.3; /* Komplett ausgegraut wenn locked */
+            opacity: 0.3;
             pointer-events: none;
         }
 
@@ -152,7 +166,6 @@
             font-size: 0.95rem;
         }
 
-        /* ORIGINALER GREEN-TOGGLE-BUTTON BEIM KOPIEREN */
         .copy-btn {
             background-color: #131a26;
             color: #00d2ff;
@@ -182,12 +195,25 @@
 </head>
 <body>
 
-    <h1>⚡ VIDA SUPER HUB ⚡</h1>
+    <h1>⚡ SUPER HUB ⚡</h1>
     
-    <div class="badge-container">
-        <div class="badge">🔥 100% FREE</div>
-        <div class="badge">🚀 NO KEY IN-GAME</div>
-        <div class="badge">🛠️ MOBILE OPTIMIZED</div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-value">10</span>
+            <span class="stat-label">Scripts</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Kostenlos</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Verfügbar</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">Aktiv</span>
+            <span class="stat-label">Status</span>
+        </div>
     </div>
 
     <div class="key-box">
@@ -231,7 +257,6 @@
                 });
             } else if (input === "") {
                 status.innerText = "Please enter a key! ⚠️";
-                status.style.color = "#858fbb";
                 document.getElementById("keyInput").style.borderColor = "#00d2ff";
                 
                 blocks.forEach(block => {
@@ -248,14 +273,12 @@
             }
         }
 
-        /* Der originale Kopier-Effekt (Button wird grün, kein nerviges Browser-Popup) */
         function copyScript(button, scriptText) {
             navigator.clipboard.writeText(scriptText).then(() => {
                 const originalText = button.innerText;
                 button.innerText = "Copied! ✅";
                 button.classList.add("copied");
                 
-                // Nach 2 Sekunden wechselt der Button automatisch zurück zum Standard
                 setTimeout(() => {
                     button.innerText = originalText;
                     button.classList.remove("copied");
