@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUPER HUB</title>
+    <title>RBX HUB</title>
     <style>
         body {
             background-color: #000000;
@@ -131,7 +131,7 @@
             background: #111111;
             border: 2px solid #222222;
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px 20px;
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
             opacity: 0.3;
@@ -162,6 +162,7 @@
         .block p {
             color: #888888;
             font-size: 0.95rem;
+            margin-bottom: 20px;
         }
 
         .copy-btn {
@@ -174,7 +175,6 @@
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
             transition: all 0.2s;
         }
 
@@ -189,20 +189,11 @@
             border-color: #ffffff !important;
             box-shadow: 0 0 15px #ffffff !important;
         }
-
-        .game-banner {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            display: block;
-        }
     </style>
 </head>
 <body>
 
-    <h1>⚡ SUPER HUB</h1>
+    <h1>⚡ RBX HUB</h1>
     
     <div class="stats-grid">
         <div class="stat-card">
@@ -232,25 +223,19 @@
 
     <div class="hub-container">
 
-        <!-- BLOCK 1 (Blox Fruits - Jetzt mit funktionierendem Postimages Bild) -->
         <div class="block" id="block1">
-            <img src="https://i.postimg.cc/mD363XGg/Bild1.png" alt="Blox Fruits Banner" class="game-banner">
             <h2>🏴‍☠️ Blox Fruits</h2>
             <p>Hermanos Hub - Best Bounty & Auto Farm Script</p>
             <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua'))()`)">Copy Script</button>
         </div>
 
-        <!-- BLOCK 2 (Blox Fruits All in One) -->
         <div class="block" id="block2">
-            <img src="https://images.prodia.xyz/744fb8f0-48fe-4098-824e-0f09d455d4f5.png" alt="Game Banner" class="game-banner">
             <h2>⚔️ Blox Fruits [All in ONE]</h2>
             <p>Fake Admin, Raids, Auto Farm, Quests & More!</p>
             <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet(&quot;https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua&quot;))()`)">Copy Script</button>
         </div>
 
-        <!-- BLOCK 3 (Rivals) -->
         <div class="block" id="block3">
-            <img src="https://images.prodia.xyz/744fb8f0-48fe-4098-824e-0f09d455d4f5.png" alt="Game Banner" class="game-banner">
             <h2>🎯 Rivals</h2>
             <p>Aimbot, Infinite Double Jump, ESP & More!</p>
             <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet(&quot;https://raw.githubusercontent.com/awakeningswifters/LexusHubLoader/refs/heads/main/Loader.lua&quot;))()`)">Copy Script</button>
@@ -259,7 +244,8 @@
     </div>
 
     <script>
-        const correctKey = "super-hub777"; 
+        // Neuer Key hinterlegt
+        const correctKey = "rbx-hub777"; 
 
         function checkKey() {
             const input = document.getElementById("keyInput").value.toLowerCase().trim();
