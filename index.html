@@ -190,7 +190,6 @@
             box-shadow: 0 0 15px #ffffff !important;
         }
 
-        /* Perfekter Style für Videos und Bilder */
         .game-banner {
             width: 100%;
             height: 150px;
@@ -198,7 +197,6 @@
             border-radius: 8px;
             margin-bottom: 15px;
             display: block;
-            border: none;
         }
     </style>
 </head>
@@ -234,16 +232,15 @@
 
     <div class="hub-container">
 
+        <!-- BLOCK 1 (Blox Fruits - Jetzt mit funktionierendem Postimages Bild) -->
         <div class="block" id="block1">
-            <video class="game-banner" autoplay loop muted playsinline>
-                <source src="https://streamable.com/video/mp4/rrulf1.mp4" type="video/mp4">
-                Ihr Browser unterstützt dieses Video nicht.
-            </video>
+            <img src="https://i.postimg.cc/mD363XGg/Bild1.png" alt="Blox Fruits Banner" class="game-banner">
             <h2>🏴‍☠️ Blox Fruits</h2>
             <p>Hermanos Hub - Best Bounty & Auto Farm Script</p>
             <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua'))()`)">Copy Script</button>
         </div>
 
+        <!-- BLOCK 2 (Blox Fruits All in One) -->
         <div class="block" id="block2">
             <img src="https://images.prodia.xyz/744fb8f0-48fe-4098-824e-0f09d455d4f5.png" alt="Game Banner" class="game-banner">
             <h2>⚔️ Blox Fruits [All in ONE]</h2>
@@ -251,6 +248,7 @@
             <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet(&quot;https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua&quot;))()`)">Copy Script</button>
         </div>
 
+        <!-- BLOCK 3 (Rivals) -->
         <div class="block" id="block3">
             <img src="https://images.prodia.xyz/744fb8f0-48fe-4098-824e-0f09d455d4f5.png" alt="Game Banner" class="game-banner">
             <h2>🎯 Rivals</h2>
@@ -275,9 +273,6 @@
                 
                 blocks.forEach(block => {
                     block.classList.add("unlocked");
-                    // Startet das Video automatisch nach dem Unlocken
-                    const video = block.querySelector("video");
-                    if (video) video.play();
                 });
             } else if (input === "") {
                 status.innerText = "Please enter a key! ⚠️";
