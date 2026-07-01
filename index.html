@@ -235,11 +235,11 @@
         </div>
         <div class="stat-card">
             <span class="stat-value">100%</span>
-            <span class="stat-label">Kostenlos</span>
+            <span class="stat-label">Free</span>
         </div>
         <div class="stat-card">
             <span class="stat-value">24/7</span>
-            <span class="stat-label">Verfügbar</span>
+            <span class="stat-label">Available</span>
         </div>
         <div class="stat-card">
             <span class="stat-value">Aktiv</span>
@@ -247,6 +247,7 @@
         </div>
     </div>
 
+    <!-- Suchanzeige und Kategorie nebeneinander -->
     <div class="controls-container">
         <div class="search-box">
             <h3>🔍 Search for Games</h3>
@@ -264,6 +265,7 @@
 
     <div class="hub-container" id="hubContainer">
 
+        <!-- Block 1 -->
         <div class="block" id="block1" data-title="Blox Fruits [Hermanos Pvp]" data-default-count="1420">
             <img src="IMG_3414.jpeg" alt="Hermanos Pvp" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
             <h2>🏴‍☠️ Blox Fruits [Hermanos Pvp]</h2>
@@ -272,6 +274,7 @@
             <div class="copy-count-badge" id="count-block1">0 copies</div>
         </div>
 
+        <!-- Block 2 -->
         <div class="block" id="block2" data-title="Blox Fruits [QUANTUM ONYX]" data-default-count="985">
             <img src="IMG_3413.jpeg" alt="Quantum Onyx" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
             <h2>⚔️ Blox Fruits [QUANTUM ONYX]</h2>
@@ -280,6 +283,7 @@
             <div class="copy-count-badge" id="count-block2">0 copies</div>
         </div>
 
+        <!-- Block 3 -->
         <div class="block" id="block3" data-title="Rivals [Lexus]" data-default-count="750">
             <img src="IMG_3415.jpeg" alt="Rivals Lexus" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
             <h2>🎯 Rivals [Lexus]</h2>
@@ -288,6 +292,7 @@
             <div class="copy-count-badge" id="count-block3">0 copies</div>
         </div>
 
+        <!-- Block 4 -->
         <div class="block" id="block4" data-title="Admin Script [Vida Hub]" data-default-count="2150">
             <img src="IMG_3416.jpeg" alt="Vida Hub" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
             <h2>👑 Admin Script [Vida Hub]</h2>
@@ -299,16 +304,14 @@
     </div>
 
     <script>
-        let currentCategory = 'all'; // Standard-Kategorie ist 'all'
+        let currentCategory = 'all';
 
-        // Lädt die Klickzahlen beim Starten der Seite
         window.addEventListener('DOMContentLoaded', () => {
             const blocks = document.querySelectorAll(".block");
             blocks.forEach(block => {
                 const id = block.id;
                 const defaultCount = parseInt(block.getAttribute("data-default-count")) || 0;
                 
-                // Holt die gespeicherten Klicks aus dem Browser oder nimmt den Startwert
                 let savedClicks = localStorage.getItem('clicks-' + id);
                 if (savedClicks === null) {
                     localStorage.setItem('clicks-' + id, defaultCount);
@@ -318,11 +321,9 @@
                 document.getElementById('count-' + id).innerText = parseInt(savedClicks).toLocaleString('en-US') + " copies";
             });
             
-            // Einmalig die Standardreihenfolge oder Sortierung erzwingen
             filterAndSortGames();
         });
 
-        // Ändert die ausgewählte Kategorie
         function setCategory(category) {
             currentCategory = category;
             
@@ -332,13 +333,11 @@
             filterAndSortGames();
         }
 
-        // Steuert sowohl das Filtern nach Namen als auch das Sortieren nach Beliebtheit
         function filterAndSortGames() {
             const input = document.getElementById("searchInput").value.toLowerCase().trim();
             const container = document.getElementById("hubContainer");
             const blocks = Array.from(document.querySelectorAll(".block"));
 
-            // 1. Sichtbarkeit filtern (basierend auf der Suche)
             blocks.forEach(block => {
                 const gameTitle = block.getAttribute("data-title").toLowerCase();
                 if (input === "" || gameTitle.includes(input)) {
@@ -348,16 +347,13 @@
                 }
             });
 
-            // 2. Sortieren
             if (currentCategory === 'popular') {
-                // Nach Kopier-Anzahl sortieren (Höchste zuerst)
                 blocks.sort((a, b) => {
                     const clicksA = parseInt(localStorage.getItem('clicks-' + a.id)) || 0;
                     const clicksB = parseInt(localStorage.getItem('clicks-' + b.id)) || 0;
                     return clicksB - clicksA;
                 });
             } else {
-                // Standard: Nach Relevanz der Anfangsbuchstaben sortieren (wie vorher)
                 blocks.sort((a, b) => {
                     const titleA = a.getAttribute("data-title").toLowerCase();
                     const titleB = b.getAttribute("data-title").toLowerCase();
@@ -365,15 +361,13 @@
                     if (input !== "") {
                         const startA = titleA.startsWith(input) ? 1 : 0;
                         const startB = titleB.startsWith(input) ? 1 : 0;
-                        if (startA !== startB) return startB - startA; // Anfangsbuchstaben bevorzugen
+                        if (startA !== startB) return startB - startA;
                     }
                     
-                    // Wenn kein Suchtext da ist oder beide gleich relevant sind, nach ID sortieren
                     return a.id.localeCompare(b.id);
                 });
             }
 
-            // HTML-Elemente im DOM neu anordnen basierend auf der Sortierung
             blocks.forEach(block => container.appendChild(block));
         }
 
@@ -391,15 +385,12 @@
                 button.innerText = "Copied! ✅";
                 button.classList.add("copied");
                 
-                // Erhöhe den Klickzähler live
                 let currentClicks = parseInt(localStorage.getItem('clicks-' + blockId)) || 0;
                 currentClicks += 1;
                 localStorage.setItem('clicks-' + blockId, currentClicks);
                 
-                // Anzeige updaten
                 document.getElementById('count-' + blockId).innerText = currentClicks.toLocaleString('en-US') + " copies";
                 
-                // Falls wir in der 'Popular'-Ansicht sind, direkt neu sortieren
                 if (currentCategory === 'popular') {
                     setTimeout(() => { filterAndSortGames(); }, 500);
                 }
