@@ -57,15 +57,11 @@
             font-weight: 600;
         }
 
-        /* Such- und Kategorie-Bereich nebeneinander */
         .controls-container {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            max-width: 650px;
+            max-width: 440px;
             margin: 0 auto 40px auto;
             padding: 0 10px;
         }
@@ -76,11 +72,10 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 15px;
-            flex: 1;
-            min-width: 250px;
+            width: 100%;
         }
 
-        .search-box h3, .category-box h3 {
+        .search-box h3 {
             color: #ffffff;
             margin-top: 0;
             margin-bottom: 12px;
@@ -106,45 +101,6 @@
         input[type="text"]:focus {
             box-shadow: 0 0 8px #ffffff;
             border-color: #ffffff;
-        }
-
-        .category-box {
-            background: #111111;
-            border: 2px solid #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 15px;
-            min-width: 200px;
-        }
-
-        .category-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .cat-btn {
-            background-color: #000000;
-            color: #888888;
-            border: 1px solid #333333;
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .cat-btn:hover {
-            color: #ffffff;
-            border-color: #666666;
-        }
-
-        .cat-btn.active {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         /* Container & Blöcke */
@@ -214,7 +170,6 @@
             box-shadow: 0 0 15px #ffffff !important;
         }
 
-        /* Kleine Anzeige für die Kopieranzahl */
         .copy-count-badge {
             font-size: 0.8rem;
             color: #666666;
@@ -247,19 +202,11 @@
         </div>
     </div>
 
-    <!-- Suchanzeige und Kategorie nebeneinander -->
+    <!-- Nur noch Suchanzeige -->
     <div class="controls-container">
         <div class="search-box">
             <h3>🔍 Search for Games</h3>
             <input type="text" id="searchInput" placeholder="Type game name..." oninput="filterAndSortGames()" onkeydown="handleSearchKey(event)">
-        </div>
-
-        <div class="category-box">
-            <h3>🗂️ Category</h3>
-            <div class="category-buttons">
-                <button id="catAll" class="cat-btn active" onclick="setCategory('all')">All</button>
-                <button id="catPopular" class="cat-btn" onclick="setCategory('popular')">Popular</button>
-            </div>
         </div>
     </div>
 
@@ -310,7 +257,7 @@
             <div class="copy-count-badge" id="count-block5">0 copies</div>
         </div>
 
-        <!-- Block 6: Element Dungeons -->
+        <!-- Block 6 -->
         <div class="block" id="block6" data-title="Element Dungeons [xpa1n]" data-default-count="1150">
             <img src="IMG_3431.jpeg" alt="Element Dungeons" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
             <h2>🔮 Element Dungeons [xpa1n]</h2>
@@ -319,11 +266,18 @@
             <div class="copy-count-badge" id="count-block6">0 copies</div>
         </div>
 
+        <!-- Block 7: Platz 1 durch 2500 Klicks -->
+        <div class="block" id="block7" data-title="99 nights in the forest [Foxname]" data-default-count="2500">
+            <img src="IMG_3439.jpeg" alt="99 nights in the forest" style="width: 100%; height: auto; max-height: 180px; border-radius: 8px; margin-bottom: 15px; object-fit: cover; border: 1px solid #222222;">
+            <h2>🌲 99 nights in the forest [Foxname]</h2>
+            <p>Auto Completed, Auto Farm, Anti AFK, Anti Die & Auto Skip Nights!</p>
+            <button class="copy-btn" onclick="copyScript(this, `loadstring(game:HttpGet(&quot;https://pastebin.com/raw/LPbPPNpC&quot;))()`, 'block7')">Copy Script</button>
+            <div class="copy-count-badge" id="count-block7">0 copies</div>
+        </div>
+
     </div>
 
     <script>
-        let currentCategory = 'all';
-
         window.addEventListener('DOMContentLoaded', () => {
             const blocks = document.querySelectorAll(".block");
             blocks.forEach(block => {
@@ -342,20 +296,12 @@
             filterAndSortGames();
         });
 
-        function setCategory(category) {
-            currentCategory = category;
-            
-            document.getElementById('catAll').classList.toggle('active', category === 'all');
-            document.getElementById('catPopular').classList.toggle('active', category === 'popular');
-            
-            filterAndSortGames();
-        }
-
         function filterAndSortGames() {
             const input = document.getElementById("searchInput").value.toLowerCase().trim();
             const container = document.getElementById("hubContainer");
             const blocks = Array.from(document.querySelectorAll(".block"));
 
+            // Filterung nach Suche
             blocks.forEach(block => {
                 const gameTitle = block.getAttribute("data-title").toLowerCase();
                 if (input === "" || gameTitle.includes(input)) {
@@ -365,27 +311,14 @@
                 }
             });
 
-            if (currentCategory === 'popular') {
-                blocks.sort((a, b) => {
-                    const clicksA = parseInt(localStorage.getItem('clicks-' + a.id)) || 0;
-                    const clicksB = parseInt(localStorage.getItem('clicks-' + b.id)) || 0;
-                    return clicksB - clicksA;
-                });
-            } else {
-                blocks.sort((a, b) => {
-                    const titleA = a.getAttribute("data-title").toLowerCase();
-                    const titleB = b.getAttribute("data-title").toLowerCase();
-                    
-                    if (input !== "") {
-                        const startA = titleA.startsWith(input) ? 1 : 0;
-                        const startB = titleB.startsWith(input) ? 1 : 0;
-                        if (startA !== startB) return startB - startA;
-                    }
-                    
-                    return a.id.localeCompare(b.id);
-                });
-            }
+            // Automatische Sortierung nach Klicks (Höchste zuerst)
+            blocks.sort((a, b) => {
+                const clicksA = parseInt(localStorage.getItem('clicks-' + a.id)) || 0;
+                const clicksB = parseInt(localStorage.getItem('clicks-' + b.id)) || 0;
+                return clicksB - clicksA;
+            });
 
+            // Im DOM einsortieren
             blocks.forEach(block => container.appendChild(block));
         }
 
@@ -409,9 +342,8 @@
                 
                 document.getElementById('count-' + blockId).innerText = currentClicks.toLocaleString('en-US') + " copies";
                 
-                if (currentCategory === 'popular') {
-                    setTimeout(() => { filterAndSortGames(); }, 500);
-                }
+                // Aktualisiert die Reihenfolge sofort nach dem Kopieren, falls sich die Ränge verschieben
+                setTimeout(() => { filterAndSortGames(); }, 500);
                 
                 setTimeout(() => {
                     button.innerText = originalText;
